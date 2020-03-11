@@ -65,6 +65,8 @@ class mRNADynamicsModel:
         tau3 (float): mRNA 2 lifetime
         lambd (float): mRNA birth rate
         delta (ndarray): 2D diffusion matrix for system
+            Diffusion matrix here refers to matrix used to update values
+            of the system, not diffusion through space.
 
     Attributes:
         alpha (float): transcription factor birth rate
@@ -73,6 +75,8 @@ class mRNADynamicsModel:
         tau3 (float): mRNA 2 lifetime
         lambd (float): mRNA birth rate
         delta (ndarray): 2D diffusion matrix for system
+            Diffusion matrix here refers to matrix used to update values
+            of the system, not diffusion through space.
         labels (list(str)): labels for each component in system
     """
 
@@ -92,9 +96,9 @@ class mRNADynamicsModel:
 
         """
         # Theoretical states
-        x1 = self.alpha * self.tau1
-        x2 = self.lambd * self.tau2 * x1
-        x3 = self.lambd * self.tau3 * x1
+        x1 = self.alpha * self.tau1 # trx factor birth rate * trx factor lifetime
+        x2 = self.lambd * self.tau2 * x1 # mRNA birth rate * mRNA1 lifetime * x1
+        x3 = self.lambd * self.tau3 * x1 # mRNA birth rate * mRNA2 lifetime * x1
 
         # Theoretical variance and covariances
         v1 = 1 / x1
